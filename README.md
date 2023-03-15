@@ -1,1 +1,1 @@
-t-works.github.io
+tablac.works.github.io
