@@ -1,20 +1,837 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>t-works</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tablac Works — ISO Training & Certification</title>
+  <link rel="stylesheet" href="customStyle.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --yellow: #ffe03c;
+      --black: #111111;
+      --grey: #f5f5f5;
+      --mid-grey: #e0e0e0;
+      --text: #222222;
+      --muted: #666666;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: var(--black);
+      border-bottom: 3px solid var(--yellow);
+    }
+
+    .nav-logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo span { color: var(--yellow); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--yellow); }
+
+    .nav-cta {
+      background: var(--yellow);
+      color: var(--black) !important;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-weight: 700 !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      transition: all 0.3s;
+    }
+
+    /* ── HERO ── */
+    #home {
+      background: var(--black);
+      color: #fff;
+      padding: 100px 40px;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      min-height: 90vh;
+    }
+
+    .hero-text { flex: 1; max-width: 640px; }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--black);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero-text h1 span { color: var(--yellow); }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--yellow);
+      color: var(--black);
+      border: 2px solid var(--yellow);
+      padding: 14px 32px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+      box-shadow: 5px 5px 0 rgba(255,224,60,0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 rgba(255,224,60,0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #444;
+      padding: 14px 32px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: #fff; }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid #333;
+      flex-wrap: wrap;
+    }
+
+    .stat-item { text-align: left; }
+    .stat-number { font-size: 2rem; font-weight: 900; color: var(--yellow); }
+    .stat-label { font-size: 0.8rem; color: #777; text-transform: uppercase; letter-spacing: 1px; }
+
+    .hero-visual {
+      flex: 0 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .cert-card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color 0.2s;
+      min-width: 140px;
+    }
+
+    .cert-card:hover { border-color: var(--yellow); }
+    .cert-card .cert-icon { font-size: 2rem; margin-bottom: 8px; }
+    .cert-card .cert-name { font-size: 0.85rem; font-weight: 700; color: #fff; }
+    .cert-card .cert-sub { font-size: 0.72rem; color: #666; margin-top: 4px; }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 80px 40px; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 12px;
+    }
+    .section-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 16px; }
+    .section-sub { color: var(--muted); max-width: 540px; margin-bottom: 48px; }
+    .centered { text-align: center; }
+    .centered .section-sub { margin-left: auto; margin-right: auto; }
+
+    /* ── SERVICES ── */
+    #services { background: #fff; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 0;
+    }
+
+    .service-card {
+      border: 2px solid var(--mid-grey);
+      border-radius: 8px;
+      padding: 32px 28px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--yellow);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover { border-color: var(--yellow); box-shadow: 6px 6px 0 var(--yellow); transform: translate(-3px, -3px); }
+    .service-card:hover::before { transform: scaleY(1); }
+
+    .service-icon { font-size: 2.2rem; margin-bottom: 16px; }
+    .service-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; }
+    .service-card p { font-size: 0.9rem; color: var(--muted); margin-bottom: 20px; }
+
+    .service-topics { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .service-topics li {
+      font-size: 0.82rem;
+      color: var(--text);
+      padding-left: 16px;
+      position: relative;
+    }
+    .service-topics li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--yellow);
+      font-weight: 700;
+    }
+
+    /* ── SCHEDULE ── */
+    #schedule { background: var(--grey); }
+
+    .schedule-table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      font-size: 0.9rem;
+    }
+
+    thead { background: var(--black); color: #fff; }
+    thead th { padding: 16px 20px; text-align: left; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+
+    tbody tr { border-bottom: 1px solid var(--mid-grey); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #fffbe8; }
+    tbody td { padding: 16px 20px; vertical-align: middle; }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--yellow);
+      color: var(--black);
+    }
+
+    .tag.online { background: #e8f5e9; color: #2e7d32; }
+    .tag.live { background: #fff3e0; color: #e65100; }
+
+    .btn-sm {
+      font-size: 0.8rem;
+      padding: 8px 18px;
+      background: var(--black);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .btn-sm:hover { background: #333; }
+
+    /* ── WHY US ── */
+    #why { background: var(--black); color: #fff; }
+    #why .section-title { color: #fff; }
+    #why .section-sub { color: #888; }
+    #why .section-label { color: var(--yellow); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      margin-top: 0;
+    }
+
+    .why-item { padding: 28px; border: 1px solid #2a2a2a; border-radius: 8px; }
+    .why-item .wi-icon { font-size: 2rem; margin-bottom: 12px; }
+    .why-item h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: #fff; }
+    .why-item p { font-size: 0.87rem; color: #888; }
+
+    /* ── CONTACT ── */
+    #contact { background: #fff; }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; }
+    .contact-info p { color: var(--muted); margin-bottom: 32px; }
+
+    .contact-details { display: flex; flex-direction: column; gap: 16px; }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .contact-item .ci-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--yellow);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .contact-item .ci-text { font-size: 0.9rem; }
+    .contact-item .ci-text strong { display: block; font-weight: 700; margin-bottom: 2px; }
+    .contact-item .ci-text a { color: var(--text); text-decoration: none; }
+    .contact-item .ci-text a:hover { color: var(--black); text-decoration: underline; }
+
+    form { display: flex; flex-direction: column; gap: 16px; }
+
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--mid-grey);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--text);
+      transition: border-color 0.2s;
+      background: #fff;
+    }
+
+    form input:focus, form select:focus, form textarea:focus {
+      outline: none;
+      border-color: var(--yellow);
+    }
+
+    form textarea { resize: vertical; min-height: 120px; }
+
+    form button {
+      background: var(--yellow);
+      color: var(--black);
+      border: 2px solid var(--yellow);
+      padding: 14px 32px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+      box-shadow: 4px 4px 0 var(--black);
+    }
+
+    form button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--black);
+    }
+
+    .form-success {
+      display: none;
+      background: #e8f5e9;
+      border: 1px solid #a5d6a7;
+      border-radius: 6px;
+      padding: 16px;
+      color: #2e7d32;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      color: #888;
+      padding: 40px;
+      text-align: center;
+      border-top: 3px solid var(--yellow);
+    }
+
+    footer .footer-logo { font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    footer .footer-logo span { color: var(--yellow); }
+    footer p { font-size: 0.85rem; }
+    footer a { color: var(--yellow); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--black); padding: 20px; gap: 16px; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+
+      #home { flex-direction: column; padding: 60px 20px; min-height: auto; gap: 40px; }
+      .hero-visual { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+      .cert-card { min-width: auto; }
+
+      section { padding: 60px 20px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
 </head>
 <body>
-	<h1>Welcome to t-works!</h1>
-	<p>This is a website for t-works, a company that specializes in designing and building custom furniture.</p>
-	<h2>Our Services</h2>
-	<ul>
-		<li>Custom furniture design</li>
-		<li>Furniture building and installation</li>
-		<li>Repairs and refinishing</li>
-	</ul>
-	<h2>Contact Us</h2>
-	<p>If you're interested in our services or have any questions, please contact us at:</p>
-	<p>Email: info@t-works.com</p>
-	<p>Phone: 555-1234</p>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">tablac<span>.works</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-text">
+    <div class="hero-badge">ISO Training &amp; Certification</div>
+    <h1>Build a Culture of <span>Quality &amp; Compliance</span></h1>
+    <p>Expert-led training programs for ISO 9001, ISO 14001, ISO 45001, and AS9100. Equip your team with the knowledge to achieve and maintain certification.</p>
+    <div class="hero-actions">
+      <a href="#schedule" class="btn-primary">View Training Schedule</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Courses Available</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">4</div>
+        <div class="stat-label">ISO Standards Covered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Practical Focus</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="cert-card">
+      <div class="cert-icon">🏭</div>
+      <div class="cert-name">ISO 9001</div>
+      <div class="cert-sub">Quality Management</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🌱</div>
+      <div class="cert-name">ISO 14001</div>
+      <div class="cert-sub">Environmental</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">⛑️</div>
+      <div class="cert-name">ISO 45001</div>
+      <div class="cert-sub">Health &amp; Safety</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">✈️</div>
+      <div class="cert-name">AS9100</div>
+      <div class="cert-sub">Aerospace QMS</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What We Offer</div>
+  <div class="section-title">Our Training Programs</div>
+  <p class="section-sub">Practical, results-driven courses led by certified industry experts — available live and online.</p>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">🏆</div>
+      <h3>ISO 9001 Lead Auditor</h3>
+      <p>Become a certified Lead Auditor for Quality Management Systems. Gain the skills to plan, conduct, and report third-party audits.</p>
+      <ul class="service-topics">
+        <li>QMS principles &amp; requirements</li>
+        <li>Audit planning &amp; execution</li>
+        <li>Audit reporting &amp; follow-up</li>
+        <li>IRCA-aligned curriculum</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🔍</div>
+      <h3>ISO 9001 Internal Auditor</h3>
+      <p>Equip your team to conduct effective internal audits and drive continual improvement across your QMS.</p>
+      <ul class="service-topics">
+        <li>Understanding ISO 9001:2015</li>
+        <li>Process-based approach</li>
+        <li>Internal audit techniques</li>
+        <li>Non-conformance management</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🌱</div>
+      <h3>ISO 14001 — Environmental</h3>
+      <p>Understand and implement an Environmental Management System. Identify environmental aspects and reduce your organisation's impact.</p>
+      <ul class="service-topics">
+        <li>ISO 14001:2015 requirements</li>
+        <li>Environmental aspects &amp; impacts</li>
+        <li>Legal compliance obligations</li>
+        <li>EMS implementation roadmap</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">⛑️</div>
+      <h3>ISO 45001 — H&amp;S Management</h3>
+      <p>Master the requirements of ISO 45001 and build a robust Occupational Health &amp; Safety Management System for your workplace.</p>
+      <ul class="service-topics">
+        <li>ISO 45001:2018 requirements</li>
+        <li>Hazard identification &amp; risk assessment</li>
+        <li>Worker participation &amp; consultation</li>
+        <li>OHS performance measurement</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">✈️</div>
+      <h3>AS9100 — Aerospace QMS</h3>
+      <p>Specialised training for the aerospace, defence, and space sectors. Understand AS9100 requirements and how they extend ISO 9001.</p>
+      <ul class="service-topics">
+        <li>AS9100 Rev D requirements</li>
+        <li>Configuration management</li>
+        <li>Risk &amp; opportunity management</li>
+        <li>First article inspection</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">📋</div>
+      <h3>Combined ISO 14001 &amp; 45001</h3>
+      <p>An integrated programme covering both Environmental and OHS Management Systems — ideal for organisations implementing both standards.</p>
+      <ul class="service-topics">
+        <li>Integrated management systems</li>
+        <li>Common requirements across standards</li>
+        <li>Combined audit strategies</li>
+        <li>Documentation &amp; record control</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule">
+  <div class="section-label">Upcoming Training</div>
+  <div class="section-title centered">Live Training Schedule</div>
+  <p class="section-sub centered">Book your seat for an upcoming session. Small class sizes ensure hands-on learning.</p>
+  <div class="schedule-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Date</th>
+          <th>Duration</th>
+          <th>Format</th>
+          <th>Seats</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ISO 9001 Lead Auditor</strong></td>
+          <td>5 – 9 May 2026</td>
+          <td>5 Days</td>
+          <td><span class="tag live">Live</span></td>
+          <td>4 left</td>
+          <td><a href="#contact" class="btn-sm">Enquire</a></td>
+        </tr>
+        <tr>
+          <td><strong>ISO 9001 Internal Auditor</strong></td>
+          <td>15 – 16 May 2026</td>
+          <td>2 Days</td>
+          <td><span class="tag online">Online</span></td>
+          <td>8 left</td>
+          <td><a href="#contact" class="btn-sm">Enquire</a></td>
+        </tr>
+        <tr>
+          <td><strong>ISO 14001 Environmental</strong></td>
+          <td>3 – 4 Jun 2026</td>
+          <td>2 Days</td>
+          <td><span class="tag live">Live</span></td>
+          <td>6 left</td>
+          <td><a href="#contact" class="btn-sm">Enquire</a></td>
+        </tr>
+        <tr>
+          <td><strong>ISO 45001 H&amp;S Management</strong></td>
+          <td>10 – 11 Jun 2026</td>
+          <td>2 Days</td>
+          <td><span class="tag online">Online</span></td>
+          <td>10 left</td>
+          <td><a href="#contact" class="btn-sm">Enquire</a></td>
+        </tr>
+        <tr>
+          <td><strong>AS9100 Aerospace QMS</strong></td>
+          <td>24 – 25 Jun 2026</td>
+          <td>2 Days</td>
+          <td><span class="tag live">Live</span></td>
+          <td>5 left</td>
+          <td><a href="#contact" class="btn-sm">Enquire</a></td>
+        </tr>
+        <tr>
+          <td><strong>ISO 14001 &amp; 45001 Combined</strong></td>
+          <td>8 – 10 Jul 2026</td>
+          <td>3 Days</td>
+          <td><span class="tag live">Live</span></td>
+          <td>8 left</td>
+          <td><a href="#contact" class="btn-sm">Enquire</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="text-align:center; margin-top:24px; color:var(--muted); font-size:0.88rem;">
+    Need a custom date or in-house delivery? <a href="#contact" style="color:var(--black); font-weight:700;">Contact us</a> to discuss your requirements.
+  </p>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-label">Our Difference</div>
+  <div class="section-title">Why Choose Tablac Works?</div>
+  <p class="section-sub">We don't just teach standards — we help you understand how to apply them in the real world.</p>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="wi-icon">🎓</div>
+      <h4>Expert Instructors</h4>
+      <p>All trainers are practising auditors and consultants with years of real-world ISO implementation experience.</p>
+    </div>
+    <div class="why-item">
+      <div class="wi-icon">🛠️</div>
+      <h4>Practical Approach</h4>
+      <p>Courses focus on real-world application — not just theory. Exercises use actual documents and case studies.</p>
+    </div>
+    <div class="why-item">
+      <div class="wi-icon">📅</div>
+      <h4>Flexible Delivery</h4>
+      <p>Choose from live classroom, virtual online, or bespoke in-house training tailored to your team's schedule.</p>
+    </div>
+    <div class="why-item">
+      <div class="wi-icon">📜</div>
+      <h4>Recognised Certificates</h4>
+      <p>Receive a certificate of completion that demonstrates your competence to employers and certification bodies.</p>
+    </div>
+    <div class="why-item">
+      <div class="wi-icon">🤝</div>
+      <h4>Post-Training Support</h4>
+      <p>We're available after training to answer questions as you implement what you've learned back at work.</p>
+    </div>
+    <div class="why-item">
+      <div class="wi-icon">💼</div>
+      <h4>In-House Programmes</h4>
+      <p>We bring the training to you — saving travel costs and allowing customisation around your specific processes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <div class="section-title">Ready to Get Started?</div>
+  <p class="section-sub">Whether you want to book a course, request a quote, or just have a question — we're here to help.</p>
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h3>Contact Information</h3>
+      <p>Reach out through any of the channels below or fill in the enquiry form and we'll get back to you within one business day.</p>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="ci-icon">✉️</div>
+          <div class="ci-text">
+            <strong>Email</strong>
+            <a href="mailto:tablac.works@gmail.com">tablac.works@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">🌐</div>
+          <div class="ci-text">
+            <strong>Website</strong>
+            <a href="https://tablacworks.github.io">tablacworks.github.io</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">📋</div>
+          <div class="ci-text">
+            <strong>Enquiries</strong>
+            <span>Course bookings, in-house quotes &amp; general enquiries welcome</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="form-success" id="formSuccess">
+        ✅ Thanks for your message! We'll be in touch within one business day.
+      </div>
+      <form id="contactForm" novalidate>
+        <input type="text" name="name" placeholder="Your Name *" required />
+        <input type="email" name="email" placeholder="Email Address *" required />
+        <input type="text" name="organisation" placeholder="Organisation" />
+        <select name="course">
+          <option value="" disabled selected>Course of Interest</option>
+          <option>ISO 9001 Lead Auditor</option>
+          <option>ISO 9001 Internal Auditor</option>
+          <option>ISO 14001 Environmental</option>
+          <option>ISO 45001 Health &amp; Safety</option>
+          <option>AS9100 Aerospace QMS</option>
+          <option>ISO 14001 &amp; 45001 Combined</option>
+          <option>In-House / Custom Programme</option>
+          <option>General Enquiry</option>
+        </select>
+        <textarea name="message" placeholder="Your message or question *" required></textarea>
+        <button type="submit">Send Enquiry →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">tablac<span>.works</span></div>
+  <p style="margin-top:8px;">ISO Training &amp; Certification Specialists</p>
+  <p style="margin-top:12px;">
+    <a href="mailto:tablac.works@gmail.com">tablac.works@gmail.com</a>
+  </p>
+  <p style="margin-top:20px; font-size:0.8rem; color:#555;">
+    &copy; 2026 Tablac Works. All rights reserved.
+  </p>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Smooth active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navItems = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(a => a.style.color = '');
+        const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (active && !active.classList.contains('nav-cta')) active.style.color = '#ffe03c';
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => observer.observe(s));
+
+  // Contact form — mailto fallback
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const data = new FormData(this);
+    const name    = data.get('name').trim();
+    const email   = data.get('email').trim();
+    const message = data.get('message').trim();
+
+    if (!name || !email || !message) {
+      alert('Please fill in your name, email, and message.');
+      return;
+    }
+
+    const subject = encodeURIComponent(`[tablac.works] Course Enquiry — ${data.get('course') || 'General'}`);
+    const body    = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\nOrganisation: ${data.get('organisation') || '-'}\nCourse: ${data.get('course') || '-'}\n\n${message}`
+    );
+
+    window.location.href = `mailto:tablac.works@gmail.com?subject=${subject}&body=${body}`;
+
+    this.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  });
+</script>
 </body>
 </html>
